@@ -8,6 +8,111 @@ import (
 	"time"
 )
 
+func showAnimal(animal AnimalIF) {
+	animal.Sleep()
+}
+
+func myFunc(arg interface{}) {
+	fmt.Println("myFunc is called...")
+	fmt.Println(arg)
+
+	value, ok := arg.(string)
+	if !ok {
+		fmt.Println("arg is not string type")
+	} else {
+		fmt.Println("arg is string type, value=", value)
+		fmt.Printf("value type is %T\n", value)
+	}
+}
+
+type AnimalIF interface {
+	Sleep()
+	GetColor() string
+	GetType() string
+}
+
+type Cat struct {
+	color string
+}
+
+type Dog struct {
+	color string
+}
+
+func (this *Cat) Sleep() {
+	fmt.Println("Cat is sleep...")
+}
+
+func (this *Cat) GetColor() string {
+	return this.color
+}
+
+func (this *Cat) GetType() string {
+	return "Cat"
+}
+
+func (this *Dog) Sleep() {
+	fmt.Println("Dog is sleep...")
+}
+
+func (this *Dog) GetColor() string {
+	return this.color
+}
+
+func (this *Dog) GetType() string {
+	return "Dog"
+}
+
+type Human struct {
+	name string
+	sex  string
+}
+
+type SuperMan struct {
+	Human
+	level int
+}
+
+type Book struct {
+	title string
+	auth  string
+}
+
+// Hero 类名首字母大写，外部包能访问，属性也是如此, 否则只能内部包访问
+type Hero struct {
+	Name  string
+	Ad    int
+	Level int
+}
+
+func (this *Human) Eat() {
+	fmt.Println("Human.Eat().......")
+}
+
+func (this *Human) Walk() {
+	fmt.Println("Human.Walk().......")
+}
+
+func (this *SuperMan) Eat() {
+	fmt.Println("SuperMan.Eat().......")
+}
+
+func (this *SuperMan) Fly() {
+	fmt.Println("SuperMan.Fly().......")
+}
+
+// GetName 方法名大写，外部包可访问，否则，只能本包内访问
+func (this *Hero) GetName() string {
+	return this.Name
+}
+func (this *Hero) SetName(name string) {
+	this.Name = name
+}
+
+func changeBook(book *Book) {
+	book.auth = "bc"
+}
+
 func changeValue(a *int) {
 	*a = 10
 }
@@ -71,6 +176,7 @@ func deferandreturn() int {
 
 func changeMap(citymap map[string]string) {
 	citymap["China"] = "HongKong"
+	citymap["Aus"] = "NewYork"
 }
 
 func main() {
@@ -278,6 +384,7 @@ func main() {
 	fmt.Println(mymap3)
 
 	fmt.Println("-------------------")
+
 	//遍历
 	for key, value := range mymap1 {
 		fmt.Println("key is", key)
@@ -297,4 +404,64 @@ func main() {
 	fmt.Println("-----------")
 	fmt.Println("after change,", mymap1)
 
+	var book1 Book
+	book1.title = "Golang"
+	book1.auth = "abc"
+	fmt.Printf("%v\n", book1)
+
+	fmt.Println("----------------")
+	changeBook(&book1) //传地址 &book1
+	fmt.Printf("after change book,%v\n", book1)
+
+	fmt.Println("--------------------------")
+	hero := Hero{Name: "LiuBang", Ad: 100, Level: 1}
+	fmt.Println(hero)
+
+	fmt.Println("get hero name is", hero.GetName())
+	hero.SetName("QIN")
+	fmt.Println("after set,name is", hero.GetName())
+
+	fmt.Println("--------------------------")
+
+	hh := Human{"zhang3", "female"}
+	hh.Eat()
+	hh.Walk()
+
+	fmt.Println("--------------------------")
+	//	h2 := SuperMan{Human{"li4", "female"}, 88}
+	var h2 SuperMan
+	h2.sex = "male"
+	h2.name = "li4"
+	h2.level = 88
+	h2.Fly()
+	h2.Eat()
+
+	fmt.Println("--------------------------")
+	// 多态，指针
+	var animal AnimalIF
+	animal = &Cat{color: "Green"}
+	animal.Sleep()
+	fmt.Println(animal.GetType())
+	fmt.Println(animal.GetColor())
+
+	fmt.Println("--------------------------")
+	animal = &Dog{"Yellow"}
+	animal.Sleep()
+	fmt.Println(animal.GetType())
+	fmt.Println(animal.GetColor())
+
+	fmt.Println("--------------------------")
+	cat := &Cat{color: "green"}
+	dog := &Dog{
+		"black",
+	}
+	showAnimal(cat)
+	showAnimal(dog)
+
+	fmt.Println("--------------------------")
+	myFunc("abc")
+	myFunc(1)
+	myFunc(3.14)
+
+	fmt.Println("--------------------------")
 }
