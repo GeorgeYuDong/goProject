@@ -8,6 +8,22 @@ import (
 	"time"
 )
 
+type Reader interface {
+	ReadBook()
+}
+
+type Writer interface {
+	WriteBook()
+}
+
+func (this *Book) ReadBook() {
+	fmt.Println("Read a Book")
+}
+
+func (this *Book) WriteBook() {
+	fmt.Println("Write a Book")
+}
+
 func showAnimal(animal AnimalIF) {
 	animal.Sleep()
 }
@@ -464,4 +480,18 @@ func main() {
 	myFunc(3.14)
 
 	fmt.Println("--------------------------")
+	bb := &Book{"ab", "cc"}
+	var r Reader
+	r = bb
+	r.ReadBook()
+
+	var w Writer
+	w = r.(Writer)
+	w.WriteBook()
+
+	fmt.Println("--------------------------")
+
+	//移动副号：13817124914
+	//移动主号：159
+
 }
