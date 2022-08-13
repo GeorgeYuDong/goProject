@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "awesomeProject/lib1"
-	. "awesomeProject/lib2"
+	//	_ "goProject/lib1"
+	//	_ "goProject/lib2"
 	//	mylib2 "awesomeProject/lib2"
 	"fmt"
 	"time"
@@ -252,7 +252,7 @@ func main() {
 	fmt.Println("welcome china")
 
 	// . package is imported to current directory, lib2 is not needed
-	LibTest2()
+	//LibTest2()
 
 	h := 1
 	changeValue(&h)
@@ -506,5 +506,10 @@ func main() {
 	//华夏：1042.33
 	//房租：2000
 	//桔多多：
+	// 622 4527 0110 0185 3481
+
+	//021-8020 5076 七牛云
+
+	//
 
 }
