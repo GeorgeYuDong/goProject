@@ -3,7 +3,7 @@ package main
 import (
 	//	_ "goProject/lib1"
 	//	_ "goProject/lib2"
-	//	mylib2 "awesomeProject/lib2"
+	//	mylib2 "goProject/lib2"
 	"fmt"
 	"time"
 )
